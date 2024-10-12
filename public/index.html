@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Example</title>
+    <script>
+        function sendRequest() {
+    console.log('Sending request...'); // Debug log
+    fetch('/send-true', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data.response); // Should log 'true'
+        document.getElementById('response').innerText = `Server Response: ${data.response}`;
+        
+        // Send a message to the React Native app to open the camera
+        console.log('Sending message to React Native app...'); // Debug log
+        window.ReactNativeWebView.postMessage('open_camera');
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+    </script>
+</head>
+<body>
+    <h1>Click the Button</h1>
+    <button onclick="sendRequest()">Send True</button>
+    <p id="response"></p>
+</body>
+</html>
